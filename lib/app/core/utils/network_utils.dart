@@ -17,15 +17,14 @@ class NetworkUtil {
   static Future<dynamic> sendRequest({
     required RequestType type,
     required String url,
-    Map<String, dynamic>? params,
+    Map<String, String>? params,
     Map<String, String>? headers,
     Map<String, dynamic>? body,
   }) async {
-    log(headers.toString());
-    log(body.toString());
+    log(body.toString(), name: 'BODY');
     try {
       var uri = Uri.https(baseUrl, url, params);
-      log(uri.toString());
+      log(uri.toString(), name: 'URL');
 
       late Response response;
 
@@ -68,18 +67,18 @@ class NetworkUtil {
       try {
         result = jsonDecode(utf8.decode(response.bodyBytes));
       } catch (e) {
-        log(e.toString());
+        log(e.toString(), name: 'EXEPTION');
       }
 
       if (response.statusCode == 401) {
         await AuthRepository()
             .refreshSession(
-                refreshToken: storage.getLoginModel.refreshToken!,
+                refreshToken: prefStorage.getLoginModel()!.refreshToken!,
                 expiresInMins: 1)
             .then((value) {
           if (value.$2 != null) {
-            storage.setTokenInfo(value.$2!.token!);
-            storage.getLoginModel.refreshToken = value.$2!.refreshToken;
+            prefStorage.setTokenInfo(value.$2!.token!);
+            prefStorage.getLoginModel()!.refreshToken = value.$2!.refreshToken;
             CustomToast.showMessage(
                 message: 'Please try again', messagetype: MessageType.showInfo);
           }
@@ -95,7 +94,7 @@ class NetworkUtil {
         return jsonRespons;
       }
     } catch (e) {
-      log(e.toString());
+      log(e.toString(), name: 'EXEPTION');
       log("error from network utils");
     }
   }

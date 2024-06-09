@@ -7,6 +7,7 @@ import 'package:task_manager_app/app/modules/home/views/all_todos_view.dart';
 import 'package:task_manager_app/app/modules/home/views/profile_view.dart';
 import 'package:task_manager_app/app/modules/home/views/search_random_view.dart';
 import 'package:task_manager_app/global/shared/app_colors.dart';
+
 import '../controllers/home_controller.dart';
 
 // ignore: must_be_immutable
@@ -98,7 +99,7 @@ class HomeView extends GetView<HomeController> {
             AllTodosView(),
             AddNewTodoView(),
             ProfileView(),
-            SearchRandomView()
+            const SearchRandomView()
           ],
         ),
       ),

@@ -127,15 +127,15 @@ class AllTodosView extends GetView<AllTodosController> {
               textType: TextStyleType.body,
               text: "Task Name",
               textColor: AppColors.whiteColor),
-          0.27.sw.pw,
+          0.3.sw.pw,
           CustomText(
               textType: TextStyleType.body,
-              text: "User Name",
+              text: "Name",
               textColor: AppColors.whiteColor),
           const Spacer(),
           CustomText(
               textType: TextStyleType.body,
-              text: "Status",
+              text: "Completed",
               textColor: AppColors.whiteColor),
         ],
       ),
@@ -164,7 +164,7 @@ class AllTodosView extends GetView<AllTodosController> {
           0.18.sw.pw,
           CustomText(
               textType: TextStyleType.body,
-              text: storage.getLoginModel.firstName ?? 'no name'),
+              text: prefStorage.getLoginModel()!.firstName ?? 'no name'),
           const Spacer(),
           Icon(
             todo.completed == true ? Icons.check : Icons.cancel,
@@ -172,7 +172,7 @@ class AllTodosView extends GetView<AllTodosController> {
                 ? AppColors.greenColor
                 : AppColors.redColor,
           ),
-          0.03.sw.pw
+          0.06.sw.pw
         ],
       ),
     );

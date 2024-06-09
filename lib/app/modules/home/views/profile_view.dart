@@ -15,14 +15,14 @@ class ProfileView extends GetView<ProfileController> {
   ProfileController controller = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
-    final userInfo = storage.getLoginModel;
+    final userInfo = prefStorage.getLoginModel();
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 0.07.sh, horizontal: 0.03.sh),
       child: Column(
         children: [
           CustomText(
               textType: TextStyleType.title,
-              text: userInfo.username ?? 'no name',
+              text: userInfo!.username ?? 'no name',
               textColor: AppColors.secondDark),
           0.03.sh.ph,
           CustomImageAvatar(image: userInfo.image, fromNetwork: true),

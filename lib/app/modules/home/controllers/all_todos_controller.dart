@@ -10,8 +10,8 @@ class AllTodosController extends BaseController {
   RxList<Todos> todosList = <Todos>[].obs;
   TextEditingController todoController = TextEditingController();
   int total = 0;
-  int limit = 0;
-  int skip = 30;
+  int limit = 30;
+  int skip = 0;
 
   Future<void> getAllTodos() async {
     errorMessage.value = '';
@@ -22,11 +22,12 @@ class AllTodosController extends BaseController {
         errorMessage.value = value.$1!;
         success.value = true;
       } else if (value.$2 != null) {
+        todosList.clear();
         todosList.addAll(value.$2!.todos!);
         total = value.$2!.total!;
         success.value = true;
-        limit++;
-        skip += 30;
+        limit += 30;
+        skip++;
       }
     });
   }
@@ -95,7 +96,10 @@ class AllTodosController extends BaseController {
         success.value = true;
       } else if (value.$2 != null) {
         todosList.addAll(value.$2!.todos!);
+        total = value.$2!.total!;
         success.value = true;
+        limit += 30;
+        skip++;
       }
     });
   }

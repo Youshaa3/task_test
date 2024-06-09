@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:task_manager_app/app/core/data/repositories/hive_repository.dart';
+import 'package:task_manager_app/app/core/data/repositories/shared_preference_repository.dart';
 import 'package:task_manager_app/global/shared/app_colors.dart';
 
 extension EmptyPadding on num {
@@ -12,7 +12,9 @@ extension EmptyPadding on num {
   SizedBox get pw => SizedBox(width: toDouble());
 }
 
-HiveRepository get storage => Get.find<HiveRepository>();
+//HiveRepository get storage => Get.find<HiveRepository>();
+SharedPrefreanceRepository get prefStorage =>
+    Get.find<SharedPrefreanceRepository>();
 
 void customLoader() {
   BotToast.showCustomLoading(

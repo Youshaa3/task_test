@@ -12,7 +12,8 @@ class NetworkConfig {
       RequestType? type = RequestType.post,
       Map<String, String>? extraHeaders = const {}}) {
     return {
-      if (needAuth == true) 'Authorization': 'Bearer ${storage.getTokenInfo}',
+      if (needAuth == true)
+        'Authorization': 'Bearer ${prefStorage.getTokenInfo()}',
       if (type != RequestType.get) 'Content-Type': 'application/json',
       ...extraHeaders!
     };

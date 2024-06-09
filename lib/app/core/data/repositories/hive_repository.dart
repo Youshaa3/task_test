@@ -6,10 +6,8 @@ import 'package:task_manager_app/app/core/data/models/apis/auth_models/login_mod
 
 class HiveRepository {
   //static string name for keys
-  static String hiveFirstLaunch = "first_launch";
   static String hiveFirstLogin = "first_login";
   static String hiveTokenInfo = 'token_info';
-  static String hiveLocaleInfo = "locale_info";
   static String hiveUserInfo = "user_info";
 
   //static string name for boxes
@@ -44,14 +42,6 @@ class HiveRepository {
     }
   }
 
-  //Store First application launch
-  Future<void> setFirstLaunch(bool value) async {
-    await Hive.box(primaryBoxName).put(hiveFirstLaunch, value);
-  }
-
-  bool get getFirstLaunch =>
-      Hive.box(primaryBoxName).get(hiveFirstLaunch, defaultValue: false);
-
   // Store First login to prevent multi login after closing app
   Future<void> setFirstLogin(bool value) async {
     await Hive.box(primaryBoxName).put(hiveFirstLogin, value);
@@ -67,19 +57,6 @@ class HiveRepository {
 
   String get getTokenInfo =>
       Hive.box(primaryBoxName).get(hiveTokenInfo, defaultValue: '');
-
-  // Store device language
-  Future<void> setAppLanguage(String value) async {
-    await Hive.box(primaryBoxName).put(hiveLocaleInfo, value);
-  }
-
-  String get getAppLanguage {
-    if (Hive.box(primaryBoxName).containsKey(hiveLocaleInfo)) {
-      return Hive.box(primaryBoxName).get(hiveLocaleInfo, defaultValue: '');
-    } else {
-      return 'en';
-    }
-  }
 
 //Store verification model for auth fill information
   Future<void> setLoginModel(LoginModel model) async {

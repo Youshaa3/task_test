@@ -21,7 +21,7 @@ class MainApp extends GetView<MainAppController> {
         navigatorObservers: [BotToastNavigatorObserver()],
         title: "Task test",
         initialRoute:
-            storage.getFirstLogin == false ? Routes.LOGIN : Routes.HOME,
+            prefStorage.getFirstLogin() == false ? Routes.LOGIN : Routes.HOME,
         getPages: AppPages.routes,
         initialBinding: MainBindings(),
       ),

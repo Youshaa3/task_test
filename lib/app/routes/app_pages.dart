@@ -9,10 +9,11 @@ import 'package:task_manager_app/app/modules/home/views/add_new_todo_view.dart';
 import 'package:task_manager_app/app/modules/home/views/all_todos_view.dart';
 import 'package:task_manager_app/app/modules/home/views/profile_view.dart';
 import 'package:task_manager_app/app/modules/home/views/search_random_view.dart';
-import '../modules/login/binding/login_binding.dart';
-import '../modules/login/view/login_view.dart';
+
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/login/binding/login_binding.dart';
+import '../modules/login/view/login_view.dart';
 
 part 'app_routes.dart';
 
@@ -44,7 +45,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SEARCH,
-      page: () => SearchRandomView(),
+      page: () => const SearchRandomView(),
       binding: SearchRandomBinding(),
     ),
     GetPage(

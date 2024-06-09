@@ -37,7 +37,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -69,7 +69,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -103,7 +103,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -117,7 +117,7 @@ class TodosDocsRepository {
       return NetworkUtil.sendRequest(
           type: RequestType.get,
           url: TodosDocsEndpoints.limitAndSkip,
-          params: {"limit": limit, "skip": skip},
+          params: {"limit": limit.toString(), "skip": skip.toString()},
           headers: NetworkConfig.getHeaders(
             type: RequestType.get,
             needAuth: true,
@@ -137,7 +137,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -170,7 +170,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -206,7 +206,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -240,7 +240,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -272,7 +272,7 @@ class TodosDocsRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {

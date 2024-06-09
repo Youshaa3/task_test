@@ -14,7 +14,7 @@ class AddNewTodoController extends BaseController {
     runFullLoadingFutureFunction(
         function: TodosDocsRepository()
             .addNew(
-                userId: storage.getLoginModel.id!,
+                userId: prefStorage.getLoginModel()!.id!,
                 todo: todoController.text,
                 completed: completed.value)
             .then((value) {

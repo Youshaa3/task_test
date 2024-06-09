@@ -40,7 +40,7 @@ class AuthRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -72,7 +72,7 @@ class AuthRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
@@ -106,7 +106,7 @@ class AuthRepository {
             );
           }
         } else {
-          return ('Check your internet conniction', null);
+          return ('Check your internet connection', null);
         }
       });
     } catch (e) {
