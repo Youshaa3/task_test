@@ -47,8 +47,8 @@ class CustomToast {
         return GestureDetector(
           onTap: cancelFunc, // Dismiss the toast when tapped
           child: Container(
-            width: 250.w,
-            height: 150.h,
+            width: 270.w,
+            height: 120.h,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10.r),

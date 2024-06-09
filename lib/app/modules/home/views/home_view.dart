@@ -95,10 +95,10 @@ class HomeView extends GetView<HomeController> {
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            const AllTodosView(),
+            AllTodosView(),
             AddNewTodoView(),
-            const ProfileView(),
-            const SearchRandomView()
+            ProfileView(),
+            SearchRandomView()
           ],
         ),
       ),

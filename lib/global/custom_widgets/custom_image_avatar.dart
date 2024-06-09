@@ -24,9 +24,10 @@ class CustomImageAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? 0.32.sw,
-      height: height ?? 0.173.sh,
+      width: width ?? 0.5.sw,
+      height: height ?? 0.23.sh,
       decoration: BoxDecoration(
+        border: Border.all(color: AppColors.mainBlue, width: 2),
         color: AppColors.greyColor.withBlue(500),
         shape: BoxShape.circle,
       ),

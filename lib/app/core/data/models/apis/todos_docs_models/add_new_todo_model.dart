@@ -1,5 +1,5 @@
 class AddNewTodoModel {
-  String? id;
+  int? id;
   String? todo;
   bool? completed;
   int? userId;

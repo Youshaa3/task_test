@@ -12,9 +12,9 @@ class CustomVerticalDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: width ?? 100.w,
-        height: height ?? 3.h,
-        color: color ?? AppColors.whiteColor,
+        width: width ?? 0.9.sw,
+        height: height ?? 0.002.sh,
+        color: color ?? AppColors.secondDark,
       ),
     );
   }

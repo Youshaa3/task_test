@@ -6,6 +6,8 @@ import 'package:task_manager_app/app/core/utils/general_utils.dart';
 
 class BaseController extends GetxController {
   RxBool success = false.obs;
+  RxBool completed = false.obs;
+
   RxString errorMessage = ''.obs;
   Rx<RequestStatus> requestStatus = RequestStatus.defaultt.obs;
   RxList<OperationType> operationType = <OperationType>[].obs;

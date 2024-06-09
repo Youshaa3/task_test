@@ -4,7 +4,11 @@ import 'package:http/http.dart';
 import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:task_manager_app/app/core/data/repositories/auth_repository.dart';
+import 'package:task_manager_app/app/core/enums/message_type.dart';
 import 'package:task_manager_app/app/core/enums/request_type.dart';
+import 'package:task_manager_app/app/core/utils/general_utils.dart';
+import 'package:task_manager_app/global/custom_widgets/custom_toast.dart';
 
 class NetworkUtil {
   static String baseUrl = 'dummyjson.com';
@@ -67,14 +71,29 @@ class NetworkUtil {
         log(e.toString());
       }
 
-      jsonRespons.putIfAbsent('statusCode', () => response.statusCode);
-      jsonRespons.putIfAbsent(
-          'response',
-          () => result != null
-              ? jsonDecode(utf8.decode(response.bodyBytes))
-              : {'success': utf8.decode(response.bodyBytes)});
-      log(jsonRespons.toString(), name: 'Response');
-      return jsonRespons;
+      if (response.statusCode == 401) {
+        await AuthRepository()
+            .refreshSession(
+                refreshToken: storage.getLoginModel.refreshToken!,
+                expiresInMins: 1)
+            .then((value) {
+          if (value.$2 != null) {
+            storage.setTokenInfo(value.$2!.token!);
+            storage.getLoginModel.refreshToken = value.$2!.refreshToken;
+            CustomToast.showMessage(
+                message: 'Please try again', messagetype: MessageType.showInfo);
+          }
+        });
+      } else {
+        jsonRespons.putIfAbsent('statusCode', () => response.statusCode);
+        jsonRespons.putIfAbsent(
+            'response',
+            () => result != null
+                ? jsonDecode(utf8.decode(response.bodyBytes))
+                : {'success': utf8.decode(response.bodyBytes)});
+        log(jsonRespons.toString(), name: 'Response');
+        return jsonRespons;
+      }
     } catch (e) {
       log(e.toString());
       log("error from network utils");
@@ -116,17 +135,17 @@ class NetworkUtil {
       var response = await request.send().timeout(
             const Duration(minutes: 10),
           );
-      // log(response.toString());
-      // switch (response.statusCode) {
-      //   case 400:
-      //     throw Exception('400 Bad request');
-      //   case 401:
-      //     throw Exception('401 Unauthorized');
-      //   case 403:
-      //     throw Exception('403 Forbidden');
-      //   case 500:
-      //     throw Exception('500 Internal server error');
-      // }
+      log(response.toString());
+      switch (response.statusCode) {
+        case 400:
+          throw Exception('400 Bad request');
+        case 401:
+          throw Exception('401 Unauthorized');
+        case 403:
+          throw Exception('403 Forbidden');
+        case 500:
+          throw Exception('500 Internal server error');
+      }
 
       Map<String, dynamic> responseJson = {};
       dynamic value;

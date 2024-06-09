@@ -34,17 +34,17 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TODOS,
-      page: () => const AllTodosView(),
+      page: () => AllTodosView(),
       binding: AllTodosBinding(),
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
       name: _Paths.SEARCH,
-      page: () => const SearchRandomView(),
+      page: () => SearchRandomView(),
       binding: SearchRandomBinding(),
     ),
     GetPage(

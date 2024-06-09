@@ -36,7 +36,7 @@ class LoginView extends GetView<LoginController> {
             hint: 'user name',
             validator: (value) =>
                 (value!.isEmpty) ? 'user name is required' : null,
-            sufexIcon: const Icon(Icons.email),
+            sufexIcon: Icon(Icons.email, color: AppColors.secondDark),
             keyboardType: TextInputType.emailAddress,
           ),
           0.015.sh.ph,
@@ -45,7 +45,7 @@ class LoginView extends GetView<LoginController> {
             hint: 'password',
             validator: (value) =>
                 (value!.isEmpty) ? 'password is required' : null,
-            sufexIcon: const Icon(Icons.password),
+            sufexIcon: Icon(Icons.password, color: AppColors.secondDark),
             keyboardType: TextInputType.visiblePassword,
           ),
           0.03.sh.ph,

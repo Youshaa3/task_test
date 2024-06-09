@@ -72,8 +72,8 @@ class CustomText extends StatelessWidget {
           height: heightText ?? 1.h,
           decoration: textDecoration,
           color: textColor,
-          fontSize: 25.sp,
-          fontWeight: FontWeight.w900,
+          fontSize: 35.sp,
+          fontWeight: FontWeight.w400,
           overflow: overflow ?? TextOverflow.visible,
         );
 
@@ -94,7 +94,7 @@ class CustomText extends StatelessWidget {
           height: heightText ?? 1.h,
           decoration: textDecoration,
           color: textColor,
-          fontSize: 20.sp,
+          fontSize: 18.sp,
           fontWeight: fontWeight ?? FontWeight.w600,
           overflow: overflow ?? TextOverflow.visible,
         );

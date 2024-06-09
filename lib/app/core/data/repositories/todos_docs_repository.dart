@@ -219,7 +219,7 @@ class TodosDocsRepository {
     try {
       return NetworkUtil.sendRequest(
           type: RequestType.put,
-          url: TodosDocsEndpoints.addNew + id.toString(),
+          url: TodosDocsEndpoints.update + id.toString(),
           body: {"completed": completed},
           headers: NetworkConfig.getHeaders(
             type: RequestType.put,
@@ -252,7 +252,7 @@ class TodosDocsRepository {
     try {
       return NetworkUtil.sendRequest(
           type: RequestType.delete,
-          url: TodosDocsEndpoints.addNew + id.toString(),
+          url: TodosDocsEndpoints.delete + id.toString(),
           headers: NetworkConfig.getHeaders(
             type: RequestType.delete,
             needAuth: true,

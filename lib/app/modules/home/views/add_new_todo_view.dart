@@ -32,16 +32,16 @@ class AddNewTodoView extends GetView<AddNewTodoController> {
           ),
           0.02.sh.ph,
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.03.sw),
+            padding: EdgeInsets.symmetric(horizontal: 0.05.sw),
             child: Row(
               children: [
                 const CustomText(
                     textType: TextStyleType.body, text: 'is complete?:'),
                 Obx(() => IconButton(
                     onPressed: () {
-                      controller.isComlete.value = !controller.isComlete.value;
+                      controller.completed.value = !controller.completed.value;
                     },
-                    icon: controller.isComlete.value
+                    icon: controller.completed.value
                         ? Icon(Icons.check_box, color: AppColors.greenColor)
                         : Icon(Icons.check_box_outline_blank,
                             color: AppColors.secondDark))),
@@ -57,7 +57,14 @@ class AddNewTodoView extends GetView<AddNewTodoController> {
                 )
               ],
             ),
-          )
+          ),
+          0.01.sh.ph,
+          Obx(
+            () => Text(
+              controller.errorMessage.value,
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
         ],
       ),
     );

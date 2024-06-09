@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:task_manager_app/app/core/data/models/apis/auth_models/login_model.dart';
@@ -24,6 +26,7 @@ class HiveRepository {
         await path_provider.getApplicationDocumentsDirectory();
     Hive.init(appDocumentDirectory.path);
     primaryBox = await Hive.openBox(primaryBoxName);
+    loginBox = await Hive.openBox(loginBoxName);
   }
 
   Future<void> clearHive() async {
@@ -80,20 +83,15 @@ class HiveRepository {
 
 //Store verification model for auth fill information
   Future<void> setLoginModel(LoginModel model) async {
-    await Hive.box(loginBoxName).put(hiveUserInfo, model.toJson());
+    await Hive.box(loginBoxName).put(hiveUserInfo, jsonEncode(model.toJson()));
   }
 
   LoginModel get getLoginModel {
     if (Hive.box(loginBoxName).containsKey(hiveUserInfo)) {
-      return LoginModel.fromJson(
-          Hive.box(loginBoxName).get(hiveUserInfo, defaultValue: LoginModel()));
+      return LoginModel.fromJson(jsonDecode(Hive.box(loginBoxName)
+          .get(hiveUserInfo, defaultValue: LoginModel())));
     } else {
       return LoginModel();
     }
-  }
-
-  Future<void> storUserInfo(LoginModel model) async {
-    loginBox = await Hive.openBox(loginBoxName);
-    setLoginModel(model);
   }
 }

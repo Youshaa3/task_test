@@ -1,54 +1,112 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:task_manager_app/app/core/data/models/apis/todos_docs_models/get_all_todos_model.dart';
 import 'package:task_manager_app/app/core/utils/general_utils.dart';
 import 'package:task_manager_app/app/modules/home/controllers/all_todos_controller.dart';
 import 'package:task_manager_app/global/custom_widgets/custom_button.dart';
 import 'package:task_manager_app/global/custom_widgets/custom_text.dart';
+import 'package:task_manager_app/global/custom_widgets/custom_text_form.dart';
 import 'package:task_manager_app/global/shared/app_colors.dart';
 
+// ignore: must_be_immutable
 class AllTodosView extends GetView<AllTodosController> {
-  const AllTodosView({super.key});
-
+  AllTodosView({super.key});
+  @override
+  AllTodosController controller = Get.put(AllTodosController());
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 0.05.sh),
-          child: ListView.builder(
-              shrinkWrap: true,
-              primary: true,
-              itemCount: 30,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    todosDialog();
-                  },
-                  child: todo(),
-                );
-              }),
-        ),
-        titeBar(),
-      ],
+    return RefreshIndicator(
+      color: AppColors.blackColor,
+      onRefresh: () async {
+        await controller.getAllTodos();
+      },
+      child: Stack(
+        children: [
+          Obx(() => controller.success.value == true
+              ? Padding(
+                  padding: EdgeInsets.only(top: 0.08.sh),
+                  child: Obx(() => ListView.builder(
+                      shrinkWrap: true,
+                      primary: false,
+                      controller: controller.scrollController,
+                      itemCount: controller.todosList.length,
+                      itemBuilder: (context, index) {
+                        final todoTtem = controller.todosList[index];
+                        return InkWell(
+                          onTap: () {
+                            controller.todoController.text =
+                                todoTtem.todo ?? 'missing data';
+                            controller.completed.value = todoTtem.completed!;
+                            todosDialog(todoTtem.id!);
+                          },
+                          child: todo(todo: todoTtem),
+                        );
+                      })),
+                )
+              : Padding(
+                  padding: EdgeInsets.only(top: 0.16.sh),
+                  child: controller.errorMessage.value == ''
+                      ? SpinKitCircle(
+                          color: AppColors.mainBlue,
+                        )
+                      : CustomText(
+                          textType: TextStyleType.body,
+                          text: controller.errorMessage.value),
+                )),
+          titeBar(),
+        ],
+      ),
     );
   }
 
-  void todosDialog() {
+  void todosDialog(int id) {
     Get.defaultDialog(
-        title: 'This is the first task',
+        title: 'task details',
+        backgroundColor: AppColors.whiteColor,
         content: SizedBox(
-          height: 0.05.sh,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          height: 0.34.sh,
+          child: Column(
             children: [
-              CustomButton(
-                text: 'Delete',
-                onPressed: () {},
-                textColor: AppColors.mainDark,
-                backgroundColor: AppColors.whiteColor,
+              CustomTextForm(
+                maxLines: 5,
+                controller: controller.todoController,
               ),
-              CustomButton(text: 'Edit', onPressed: () {}),
+              Row(
+                children: [
+                  const CustomText(
+                      textType: TextStyleType.body, text: 'is completete?'),
+                  0.03.sw.pw,
+                  Obx(() => IconButton(
+                      onPressed: () {
+                        controller.completed.value =
+                            !controller.completed.value;
+                      },
+                      icon: controller.completed.value
+                          ? Icon(Icons.check_box, color: AppColors.greenColor)
+                          : Icon(Icons.check_box_outline_blank,
+                              color: AppColors.secondDark))),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomButton(
+                    text: 'Delete',
+                    onPressed: () {
+                      controller.deleteTodo(id);
+                    },
+                    textColor: AppColors.mainDark,
+                    backgroundColor: AppColors.whiteColor,
+                  ),
+                  CustomButton(
+                      text: 'Edit',
+                      onPressed: () {
+                        controller.editTodo(id);
+                      }),
+                ],
+              ),
             ],
           ),
         ));
@@ -84,7 +142,7 @@ class AllTodosView extends GetView<AllTodosController> {
     );
   }
 
-  Widget todo() {
+  Widget todo({required Todos todo}) {
     return Container(
       width: 0.92.sw,
       height: 0.05.sh,
@@ -95,14 +153,24 @@ class AllTodosView extends GetView<AllTodosController> {
               Border(bottom: BorderSide(color: AppColors.mainBlue, width: 2))),
       child: Row(
         children: [
-          const CustomText(
-              textType: TextStyleType.small, text: "This is the first task"),
+          SizedBox(
+            width: 0.35.sw,
+            child: CustomText(
+              textType: TextStyleType.body,
+              text: todo.todo ?? 'missing name',
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           0.18.sw.pw,
-          const CustomText(textType: TextStyleType.small, text: "Youshaa"),
+          CustomText(
+              textType: TextStyleType.body,
+              text: storage.getLoginModel.firstName ?? 'no name'),
           const Spacer(),
           Icon(
-            Icons.check,
-            color: AppColors.greenColor,
+            todo.completed == true ? Icons.check : Icons.cancel,
+            color: todo.completed == true
+                ? AppColors.greenColor
+                : AppColors.redColor,
           ),
           0.03.sw.pw
         ],
