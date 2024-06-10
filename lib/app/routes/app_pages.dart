@@ -3,12 +3,12 @@
 import 'package:get/get.dart';
 import 'package:task_manager_app/app/modules/home/bindings/add_new_binding.dart';
 import 'package:task_manager_app/app/modules/home/bindings/all_todos_binding.dart';
+import 'package:task_manager_app/app/modules/home/bindings/my_todos_binding.dart';
 import 'package:task_manager_app/app/modules/home/bindings/profile_binding.dart';
-import 'package:task_manager_app/app/modules/home/bindings/search_random_binding.dart';
 import 'package:task_manager_app/app/modules/home/views/add_new_todo_view.dart';
 import 'package:task_manager_app/app/modules/home/views/all_todos_view.dart';
+import 'package:task_manager_app/app/modules/home/views/my_todos_view.dart';
 import 'package:task_manager_app/app/modules/home/views/profile_view.dart';
-import 'package:task_manager_app/app/modules/home/views/search_random_view.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
@@ -45,8 +45,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SEARCH,
-      page: () => const SearchRandomView(),
-      binding: SearchRandomBinding(),
+      page: () => MyTodosView(),
+      binding: MyTodosBinding(),
     ),
     GetPage(
       name: _Paths.LOGIN,

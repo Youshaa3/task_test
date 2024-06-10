@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:get/get.dart';
+import 'package:task_manager_app/app/core/data/models/apis/todos_docs_models/get_all_todos_model.dart';
 import 'package:task_manager_app/app/core/enums/operation_type.dart';
 import 'package:task_manager_app/app/core/enums/request_status.dart';
 import 'package:task_manager_app/app/core/utils/general_utils.dart';
@@ -7,6 +8,7 @@ import 'package:task_manager_app/app/core/utils/general_utils.dart';
 class BaseController extends GetxController {
   RxBool success = false.obs;
   RxBool completed = false.obs;
+  RxList<Todos> todosList = <Todos>[].obs;
 
   RxString errorMessage = ''.obs;
   Rx<RequestStatus> requestStatus = RequestStatus.defaultt.obs;

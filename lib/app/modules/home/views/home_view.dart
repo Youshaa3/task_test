@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:task_manager_app/app/core/utils/general_utils.dart';
 import 'package:task_manager_app/app/modules/home/views/add_new_todo_view.dart';
 import 'package:task_manager_app/app/modules/home/views/all_todos_view.dart';
+import 'package:task_manager_app/app/modules/home/views/my_todos_view.dart';
 import 'package:task_manager_app/app/modules/home/views/profile_view.dart';
-import 'package:task_manager_app/app/modules/home/views/search_random_view.dart';
 import 'package:task_manager_app/global/shared/app_colors.dart';
 
 import '../controllers/home_controller.dart';
@@ -99,7 +99,7 @@ class HomeView extends GetView<HomeController> {
             AllTodosView(),
             AddNewTodoView(),
             ProfileView(),
-            const SearchRandomView()
+            MyTodosView()
           ],
         ),
       ),

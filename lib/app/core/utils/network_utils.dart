@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:path/path.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:task_manager_app/app/core/data/repositories/auth_repository.dart';
 import 'package:task_manager_app/app/core/enums/message_type.dart';
 import 'package:task_manager_app/app/core/enums/request_type.dart';
@@ -22,6 +23,7 @@ class NetworkUtil {
     Map<String, dynamic>? body,
   }) async {
     log(body.toString(), name: 'BODY');
+    log(headers.toString());
     try {
       var uri = Uri.https(baseUrl, url, params);
       log(uri.toString(), name: 'URL');
@@ -74,7 +76,7 @@ class NetworkUtil {
         await AuthRepository()
             .refreshSession(
                 refreshToken: prefStorage.getLoginModel()!.refreshToken!,
-                expiresInMins: 1)
+                expiresInMins: 30)
             .then((value) {
           if (value.$2 != null) {
             prefStorage.setTokenInfo(value.$2!.token!);

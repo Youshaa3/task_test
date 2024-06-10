@@ -4,23 +4,21 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:task_manager_app/app/core/data/models/apis/todos_docs_models/get_all_todos_model.dart';
 import 'package:task_manager_app/app/core/utils/general_utils.dart';
-import 'package:task_manager_app/app/modules/home/controllers/all_todos_controller.dart';
-import 'package:task_manager_app/global/custom_widgets/custom_button.dart';
+import 'package:task_manager_app/app/modules/home/controllers/my_todos_controller.dart';
 import 'package:task_manager_app/global/custom_widgets/custom_text.dart';
-import 'package:task_manager_app/global/custom_widgets/custom_text_form.dart';
 import 'package:task_manager_app/global/shared/app_colors.dart';
 
 // ignore: must_be_immutable
-class AllTodosView extends GetView<AllTodosController> {
-  AllTodosView({super.key});
+class MyTodosView extends GetView<MyTodosController> {
+  MyTodosView({super.key});
   @override
-  AllTodosController controller = Get.put(AllTodosController());
+  MyTodosController controller = Get.put(MyTodosController());
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       color: AppColors.blackColor,
       onRefresh: () async {
-        await controller.getAllTodos();
+        await controller.getTodosByUserId();
       },
       child: Stack(
         children: [
@@ -30,19 +28,10 @@ class AllTodosView extends GetView<AllTodosController> {
                   child: Obx(() => ListView.builder(
                       shrinkWrap: true,
                       primary: false,
-                      controller: controller.scrollController,
                       itemCount: controller.todosList.length,
                       itemBuilder: (context, index) {
                         final todoTtem = controller.todosList[index];
-                        return InkWell(
-                          onTap: () {
-                            controller.todoController.text =
-                                todoTtem.todo ?? 'missing data';
-                            controller.completed.value = todoTtem.completed!;
-                            todosDialog(todoTtem.id!);
-                          },
-                          child: todo(todo: todoTtem),
-                        );
+                        return todo(todo: todoTtem);
                       })),
                 )
               : Padding(
@@ -59,61 +48,6 @@ class AllTodosView extends GetView<AllTodosController> {
         ],
       ),
     );
-  }
-
-  void todosDialog(int id) {
-    Get.defaultDialog(
-        title: 'task details',
-        backgroundColor: AppColors.whiteColor,
-        content: SizedBox(
-          height: 0.3.sh,
-          child: Column(
-            children: [
-              CustomTextForm(
-                maxLines: 4,
-                controller: controller.todoController,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 0.03.sw, vertical: 0.01.sh),
-                child: Row(
-                  children: [
-                    const CustomText(
-                        textType: TextStyleType.body, text: 'is completete?'),
-                    0.03.sw.pw,
-                    Obx(() => InkWell(
-                        onTap: () {
-                          controller.completed.value =
-                              !controller.completed.value;
-                        },
-                        child: controller.completed.value
-                            ? Icon(Icons.check_box, color: AppColors.greenColor)
-                            : Icon(Icons.check_box_outline_blank,
-                                color: AppColors.secondDark))),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CustomButton(
-                    text: 'Delete',
-                    onPressed: () {
-                      controller.deleteTodo(id);
-                    },
-                    textColor: AppColors.mainDark,
-                    backgroundColor: AppColors.whiteColor,
-                  ),
-                  CustomButton(
-                      text: 'Edit',
-                      onPressed: () {
-                        controller.editTodo(id);
-                      }),
-                ],
-              ),
-            ],
-          ),
-        ));
   }
 
   Widget titeBar() {
@@ -166,7 +100,9 @@ class AllTodosView extends GetView<AllTodosController> {
             ),
           ),
           0.18.sw.pw,
-          const CustomText(textType: TextStyleType.body, text: 'Youshaa'),
+          CustomText(
+              textType: TextStyleType.body,
+              text: prefStorage.getLoginModel()!.firstName ?? 'no name'),
           const Spacer(),
           Icon(
             todo.completed == true ? Icons.check : Icons.cancel,

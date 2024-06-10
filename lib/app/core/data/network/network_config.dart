@@ -14,7 +14,8 @@ class NetworkConfig {
     return {
       if (needAuth == true)
         'Authorization': 'Bearer ${prefStorage.getTokenInfo()}',
-      if (type != RequestType.get) 'Content-Type': 'application/json',
+      if (type != RequestType.get && type != RequestType.delete)
+        'Content-Type': 'application/json',
       ...extraHeaders!
     };
   }
